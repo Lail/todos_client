@@ -1,48 +1,49 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
 import styles from './styles';
 import styled from 'styled-components';
 
+// Components
+import Nav from './components/Nav';
+import Tasks from './components/Tasks';
+import Tags from './components/Tags';
+
 const Ground = styled.div`
   background-color: ${styles.neutralDark};
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 16px;
   font-size: calc(10px + 2vmin);
-  color: ${styles.neutralDark};
+  padding: 10px;
 `;
 const Card = styled.div`
   background-color: ${styles.neutralBright};
-  width: 100%;
   max-width: 400px;
-  padding: 2vmin;
+  color: ${styles.neutralDark};
 `;
 
 class App extends Component {
   render() {
     return (
-      <Ground>
-        <Card>
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </Card>
-      </Ground>
+      <Router>
+        <Ground>
+          <Card>
+            <Nav />
+            <Switch>
+              <Route path={[`/`,`/tasks`]} exact component={Tasks}/>
+              <Route path={`/tags`} component={Tags}/>
+              <Route render={() => <div>404</div>} />
+            </Switch>
+            <img src={logo} className="App-logo" alt="logo" />
+          </Card>
+        </Ground>
+      </Router>
     );
   }
 }

@@ -6,9 +6,11 @@
     "react-scripts": "2.1.1"
   },
   "dependencies": {
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.7.0-alpha",
+    "react-dom": "^16.7.0-alpha",
     "react-pose": "^4.0.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "styled-components": "^4.1.2"
   },
   "scripts": {
