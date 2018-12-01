@@ -1,6 +1,6 @@
 export default {
   actionColor: '#33AAEE',
-  neutralBright: '#FFFFFF',
+  neutralBright: '#FFFFf8',
   neutralMid: '#dddddd',
   neutralDark: '#333333',
   highlight: 'azure',

@@ -8,6 +8,7 @@ const List = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
   box-shadow: inset 0 -3px 0 0 ${styles.neutralMid};
 `;
 const Item = styled.li`
@@ -15,7 +16,7 @@ const Item = styled.li`
 `;
 const StyledLink = styled(NavLink)`
   display: inline-block;
-  padding: 15px 20px 15px;
+  padding: 1em 2em;
   margin: 0;
   text-decoration: none;
   font-size: 65%;

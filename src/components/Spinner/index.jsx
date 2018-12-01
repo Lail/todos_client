@@ -18,7 +18,7 @@ const spinnerRotate = keyframes`
     stroke-dashoffset: 50;
     transform: rotate(135deg);
   }
-  80% {
+  85% {
     stroke-dashoffset: 100;
     transform: rotate(540deg);
   }

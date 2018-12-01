@@ -22,17 +22,25 @@ const TagList = styled.div`
   line-height: 1.1;
 `;
 
-const Task = () => (
+const Task = ({ title, tags }) => (
   <Wrapper>
-    <Title>Finish homework exercise</Title>
+    <Title>{ title }</Title>
     <TagList>
-      <Tag title={'Today'} />
-      <Tag title={'Soon'} />
-      <Tag title={'Important'} />
-      <Tag title={'Work'} />
-      <Tag title={'Very LOng Tag Right Here'} />
+      { tags && tags.map((tag, i) => (
+        <Tag title={title} key={`tag_${i}`} />
+      )) }
     </TagList>
   </Wrapper>
 );
+
+Task.defaultProps = {
+  title: "Title missing",
+  tags: [],
+}
+
+Task.propTypes = {
+  title: PropTypes.string.isRequired,
+  tags: PropTypes.array.isRequired,
+}
 
 export default Task;

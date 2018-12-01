@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import Nav from './components/Nav';
 import Tasks from './components/Tasks';
 import Tags from './components/Tags';
-import Spinner from './components/Spinner';
 
 const Ground = styled.div`
   background-color: ${styles.neutralDark};
@@ -22,9 +21,11 @@ const Ground = styled.div`
   padding: 10px;
 `;
 const Card = styled.div`
+  position: relative;
   background-color: ${styles.neutralBright};
   width: 100%;
   max-width: 400px;
+  height: 90%;
   color: ${styles.neutralDark};
   box-shadow: 0 2px 10px 0 rgba(0,0,0,0.3);
 `;
@@ -41,7 +42,6 @@ class App extends Component {
               <Route path={`/tags`} component={Tags}/>
               <Route render={() => <div>404</div>} />
             </Switch>
-            <Spinner />
           </Card>
         </Ground>
       </Router>

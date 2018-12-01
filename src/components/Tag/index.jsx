@@ -17,6 +17,11 @@ const Wrapper = styled.span`
   margin-right: 0.3em;
   border-radius: 3px;
 `;
+const Count = styled.span`
+  border-left: 1px olid ${({color}) => color.text};
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+`;
 
 const Tag = ({title, count}) => {
   const getColors = (str) => {
@@ -30,7 +35,12 @@ const Tag = ({title, count}) => {
   }
 
   return (
-    <Wrapper color={getColors(title)}>{title}</Wrapper>
+    <Wrapper color={getColors(title)}>
+      {title}
+      { count &&
+        <Count>{count}</Count>
+      }
+    </Wrapper>
   );
 }
 
