@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import './App.css';
 import styles from './styles';
 import styled from 'styled-components';
 
@@ -8,6 +7,7 @@ import styled from 'styled-components';
 import Nav from './components/Nav';
 import Tasks from './components/Tasks';
 import Tags from './components/Tags';
+import Spinner from './components/Spinner';
 
 const Ground = styled.div`
   background-color: ${styles.neutralDark};
@@ -41,6 +41,7 @@ class App extends Component {
               <Route path={`/tags`} component={Tags}/>
               <Route render={() => <div>404</div>} />
             </Switch>
+            <Spinner />
           </Card>
         </Ground>
       </Router>

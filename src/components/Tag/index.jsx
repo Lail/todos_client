@@ -5,7 +5,7 @@ import styles from '../../styles';
 
 const Wrapper = styled.span`
   display: inline-block;
-  font-size: 50%;
+  font-size: 55%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow:ellipsis;

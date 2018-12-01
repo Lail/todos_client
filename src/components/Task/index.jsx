@@ -19,7 +19,7 @@ const Title = styled.h2`
   margin: 0 0 0.25em 0;
 `;
 const TagList = styled.div`
-  line-height: 0.9;
+  line-height: 1.1;
 `;
 
 const Task = () => (
