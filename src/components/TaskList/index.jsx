@@ -4,20 +4,18 @@ import styles from '../../styles';
 import styled from 'styled-components';
 import posed from 'react-pose';
 
+// Components
+import Task from '../Task';
+
 const List = styled.div`
-  padding: 5px;
   min-height: 300px;
-  box-shadow: inset 0 -3px 0 0 ${styles.neutralMid};
-`;
-const Item = styled.li`
-  display: inline-block;
 `;
 
 const TaskList = () => (
   <List>
-    <Item>
-      a Task
-    </Item>
+    <Task/>
+    <Task/>
+    <Task/>
   </List>
 );
 

@@ -35,7 +35,10 @@ const StyledLink = styled(NavLink)`
 const Nav = () => (
   <List>
     <Item>
-      <StyledLink to="/tasks">
+      <StyledLink
+        to="/tasks"
+        isActive={(match, {pathname}) => (match || pathname === '/')}
+      >
         Tasks
       </StyledLink>
     </Item>
@@ -45,6 +48,6 @@ const Nav = () => (
       </StyledLink>
     </Item>
   </List>
-);
+)
 
 export default Nav;

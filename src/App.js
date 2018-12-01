@@ -26,6 +26,7 @@ const Card = styled.div`
   width: 100%;
   max-width: 400px;
   color: ${styles.neutralDark};
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.3);
 `;
 
 class App extends Component {
@@ -36,8 +37,7 @@ class App extends Component {
           <Card>
             <Nav />
             <Switch>
-              <Route path={`/`} component={Tasks}/>
-              <Route path={`/tasks`} component={Tasks}/>
+              <Route path={`/(|tasks)`} component={Tasks}/>
               <Route path={`/tags`} component={Tags}/>
               <Route render={() => <div>404</div>} />
             </Switch>
