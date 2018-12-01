@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import logo from './logo.svg';
 import './App.css';
 import styles from './styles';
 import styled from 'styled-components';
@@ -24,6 +23,7 @@ const Ground = styled.div`
 `;
 const Card = styled.div`
   background-color: ${styles.neutralBright};
+  width: 100%;
   max-width: 400px;
   color: ${styles.neutralDark};
 `;
@@ -36,11 +36,11 @@ class App extends Component {
           <Card>
             <Nav />
             <Switch>
-              <Route path={[`/`,`/tasks`]} exact component={Tasks}/>
+              <Route path={`/`} component={Tasks}/>
+              <Route path={`/tasks`} component={Tasks}/>
               <Route path={`/tags`} component={Tags}/>
               <Route render={() => <div>404</div>} />
             </Switch>
-            <img src={logo} className="App-logo" alt="logo" />
           </Card>
         </Ground>
       </Router>

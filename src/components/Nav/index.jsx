@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from '../../styles';
 import styled from 'styled-components';
-import posed from 'react-pose';
+//import posed from 'react-pose';
 
 const List = styled.ul`
   list-style: none;
@@ -28,8 +27,7 @@ const StyledLink = styled(NavLink)`
   }
   &.active {
     color: ${styles.actionColor};
-    background: ${styles.neutralBright};
-    box-shadow: 0 5px 0 solid #345609;
+    background: ${styles.highlight};
     box-shadow: inset 0 -3px 0 0 ${styles.actionColor};
   }
 `;

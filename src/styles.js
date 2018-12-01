@@ -3,5 +3,5 @@ export default {
   neutralBright: '#FFFFFF',
   neutralMid: '#dddddd',
   neutralDark: '#333333',
-
+  highlight: 'azure',
 }

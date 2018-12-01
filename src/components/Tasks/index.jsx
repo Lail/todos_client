@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Components
+import TaskList from '../TaskList';
+
 const Tasks = () => (
-  <h1>Tasks</h1>
+  <TaskList />
 );
 
 export default Tasks;
