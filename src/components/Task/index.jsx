@@ -7,7 +7,11 @@ import styles from '../../styles';
 //Components
 import Tag from '../Tag'
 
-const Wrapper = styled.div`
+const PosedWrapper = posed.div({
+  on: { opacity: 1.0 },
+  off: { opacity: 0.0 }
+});
+const Wrapper = styled(PosedWrapper)`
   padding: 0.85em 1em 1em;
   box-shadow: inset 0 -1px 0 0 ${styles.neutralMid};
 `;
@@ -16,20 +20,23 @@ const Title = styled.h2`
   font-weight: 300;
   line-height: 1.0;
   padding: 0;
-  margin: 0 0 0.25em 0;
+  margin: 0;
 `;
 const TagList = styled.div`
+  margin-top: 0.25em;
   line-height: 1.1;
 `;
 
 const Task = ({ title, tags }) => (
   <Wrapper>
     <Title>{ title }</Title>
-    <TagList>
-      { tags && tags.map((tag, i) => (
-        <Tag title={title} key={`tag_${i}`} />
-      )) }
-    </TagList>
+    { tags && tags.length > 0 &&
+      <TagList>
+        { tags.map((tag, i) => (
+          <Tag title={title} key={`tag_${i}`} />
+        )) }
+      </TagList>
+    }
   </Wrapper>
 );
 
