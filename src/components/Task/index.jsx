@@ -7,13 +7,12 @@ import styles from '../../styles';
 //Components
 import Tag from '../Tag'
 
-const PosedWrapper = posed.div({
-  on: { opacity: 1.0 },
-  off: { opacity: 0.0 }
-});
-const Wrapper = styled(PosedWrapper)`
+const Wrapper = styled.div`
   padding: 0.85em 1em 1em;
   box-shadow: inset 0 -1px 0 0 ${styles.neutralMid};
+  &:last-child {
+    box-shadow: none;
+  }
 `;
 const Title = styled.h2`
   font-size: 120%;

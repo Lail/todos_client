@@ -27,6 +27,8 @@ const Card = styled.div`
   max-width: 400px;
   height: 90%;
   color: ${styles.neutralDark};
+  border-radius: 5px;
+  overflow: hidden;
   box-shadow: 0 2px 10px 0 rgba(0,0,0,0.3);
 `;
 

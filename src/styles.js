@@ -1,7 +1,10 @@
 export default {
-  actionColor: '#33AAEE',
+  highlight:   '#D2EEF9',
+  actionColor: '#22BBDD',
+  actionDark:  '#23718D',
   neutralBright: '#FFFFf8',
   neutralMid: '#dddddd',
   neutralDark: '#333333',
-  highlight: 'azure',
+  errorHighlight: 'pink',
+  errorText: 'red',
 }

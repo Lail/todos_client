@@ -2,21 +2,25 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from '../../styles';
 import styled from 'styled-components';
-//import posed from 'react-pose';
 
 const List = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
   width: 100%;
+  height: 2em;
+  display: flex;
+  align-items: stetch;
   box-shadow: inset 0 -3px 0 0 ${styles.neutralMid};
 `;
 const Item = styled.li`
-  display: inline-block;
+  display: flex;
+  align-items: stetch;
 `;
 const StyledLink = styled(NavLink)`
-  display: inline-block;
-  padding: 1em 2em;
+  display: flex;
+  align-items: center;
+  padding: 0 2em;
   margin: 0;
   text-decoration: none;
   font-size: 65%;
@@ -27,7 +31,7 @@ const StyledLink = styled(NavLink)`
     box-shadow: inset 0 -3px 0 0 ${styles.actionColor};
   }
   &.active {
-    color: ${styles.actionColor};
+    color: ${styles.actionDark};
     background: ${styles.highlight};
     box-shadow: inset 0 -3px 0 0 ${styles.actionColor};
   }
