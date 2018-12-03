@@ -70,6 +70,8 @@ const customStyles = ({
   return (
     <AsyncSelect
       cacheOptions
+      isClearable
+      isMulti
       defaultOptions={defaultOptions}
       loadOptions={promiseOptions}
       onChange={handleSelectChange}

@@ -113,9 +113,10 @@ const Tasks = () => {
     .finally(() => { setListBusy(false) });
   }, []);
 
-  const postNewTask = (title, tags=[]) => {
+  const postNewTask = (title, tags) => {
     setFormBusy(true);
-    const payload = { data: {attributes: { title: title, tags: tags }}};
+    const tagValues = tags ? { tags: tags.map(t => t.value) } : {}
+    const payload = { data: {attributes: { title: title, ...tagValues }}};
     axios.post('http://localhost:3001/api/v1/tasks', payload)
     .then((res) => {
       setTasks( [TaskFormatter(res.data), ...tasks] );
@@ -132,7 +133,7 @@ const Tasks = () => {
       return setFormError("Can't be blank");
     }
     setFormError(null);
-    postNewTask(textValue, [selectValue]);
+    postNewTask(textValue, selectValue);
   }
 
   const activate = (e) => {
@@ -148,7 +149,7 @@ const Tasks = () => {
   };
 
   const handleTextChange = (e) => { setTextValue(e.target.value); }
-  const handleSelectChange = (e) => { setSelectValue(e.value); }
+  const handleSelectChange = (e) => { setSelectValue(e); }
 
   return (
     <Fragment>
