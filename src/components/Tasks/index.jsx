@@ -136,7 +136,6 @@ const Tasks = () => {
     setFormOpen(false);
   };
 
-
   return (
     <Fragment>
       <TaskList pose={ formOpen ? 'small' : 'large' }>
@@ -167,7 +166,8 @@ const Tasks = () => {
         <TitleText
           id='title'
           onClick={ activate }
-          value={formOpen ?  null : ''}
+          value={ formOpen ?  undefined : '' }
+          readOnly={ !formOpen }
           pose={ formOpen ? 'large' : 'small' }
           placeholder="Add a Todo..."
         />
