@@ -10,14 +10,15 @@ import TaskListFormatter from '../../formatters/TaskListFormatter';
 import Task from '../Task';
 import Button from '../Button';
 import Spinner from '../Spinner';
+import TagSelect from '../TagSelect';
 
 const PosedTaskList = posed.div({
-  large: { bottom: '2.5em', flip: true },
-  small: { bottom: '8em', flip: true },
+  large: { top: '4.5em', flip: true },
+  small: { top: '10em', flip: true },
 });
 const TaskList = styled(PosedTaskList)`
   position: absolute;
-  top: 2em; right: 0; bottom: 3em; left: 0;
+  right: 0; bottom: 0; left: 0;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 10px;
@@ -41,14 +42,14 @@ const PosedTaskForm = posed.form({
 });
 const TaskForm = styled(PosedTaskForm)`
   position: absolute;
-  right: 0; bottom: 0; left: 0;
-  border-top: 1px solid ${styles.neutralMid};
+  right: 0; top: 2em; left: 0;
+  border-bottom: 1px solid ${styles.neutralMid};
   background-color: ${styles.neutralBright};
   padding: 0.5em 1em 0.5em 1em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
 `;
 const PosedTitleText = posed.textarea({
   large: { height: '4em', flip: true },
@@ -60,8 +61,11 @@ const TitleText = styled(PosedTitleText)`
   font-size: 70%;
   border: 1px solid ${styles.neutralMid};
   padding: 0.35em 0.5em;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-radius: 3px;
+  outline: 0 !important;
+  &:focus {
+    border: 2px solid ${styles.actionColor};
+  }
 `;
 const Actions = styled.div`
   display: flex;
@@ -92,6 +96,8 @@ const Tasks = () => {
   const [formBusy, setFormBusy] = useState(false);
   const [formError, setFormError] = useState(null);
   const [formOpen, setFormOpen] = useState(false);
+  const [textValue, setTextValue] = useState(null);
+  const [selectValue, setSelectValue] = useState(null);
 
   // load full list on mount
   useEffect(() => {
@@ -110,7 +116,7 @@ const Tasks = () => {
     const payload = { data: {attributes: { title: title }}};
     axios.post('http://localhost:3001/api/v1/tasks', payload)
     .then((res) => {
-      setTasks( [...tasks, {id: res.data.data.id, title: res.data.data.attributes.title}] );
+      setTasks( [{id: res.data.data.id, title: res.data.data.attributes.title}, ...tasks] );
       deactivate();
       scrollIntoView(document.getElementById(`Task_${res.data.data.id}`));
     })
@@ -120,6 +126,7 @@ const Tasks = () => {
 
   const submitNewForm = (e) => {
     e.preventDefault()
+    debugger;
     const title = e.target.title.value;
     if(!title || title.length < 1){
       return setFormError("Can't be blank");
@@ -138,8 +145,47 @@ const Tasks = () => {
     setFormOpen(false);
   };
 
+  const handleTextChange = (e) => {
+    console.log(e.target.value);
+    setTextValue(e.target.value);
+  }
+  const handleSelectChange = (e) => {
+    console.log('FIRE!!!');
+    console.log(e.target.value);
+    setSelectValue(e.target.value);
+  }
+
   return (
     <Fragment>
+      <TaskForm
+        onSubmit={ submitNewForm }
+        pose={ formOpen ? 'large' : 'small' }
+      >
+        <TitleText
+          id='title'
+          onClick={ activate }
+          value={ formOpen ?  undefined : '' }
+          readOnly={ !formOpen }
+          pose={ formOpen ? 'large' : 'small' }
+          placeholder="Add a Todo..."
+          onChange={ handleTextChange }
+        />
+        { formOpen &&
+          <Fragment>
+            <TagSelect name='tags' inputValue={""} handleSelectChange={handleSelectChange} />
+            <Actions>
+              { formError &&
+                <FormError>{ formError }</FormError>
+              }
+              { formBusy &&
+                <Spinner/>
+              }
+              <Button onClick={deactivate} value="Cancel">Cancel</Button>
+              <Button type="submit" value="Save" disabled={formBusy}>Save</Button>
+            </Actions>
+          </Fragment>
+        }
+      </TaskForm>
       <TaskList pose={ formOpen ? 'small' : 'large' }>
         { !listBusy && tasks &&
           <PosedList pose='enter' initialPose='exit' >
@@ -161,34 +207,6 @@ const Tasks = () => {
           <ListError>{ listError }</ListError>
         }
       </TaskList>
-      <TaskForm
-        onSubmit={ submitNewForm }
-        pose={ formOpen ? 'large' : 'small' }
-      >
-        <TitleText
-          id='title'
-          onClick={ activate }
-          value={ formOpen ?  undefined : '' }
-          readOnly={ !formOpen }
-          pose={ formOpen ? 'large' : 'small' }
-          placeholder="Add a Todo..."
-        />
-        { formOpen &&
-          <Fragment>
-            Tag stuff
-            <Actions>
-              { formError &&
-                <FormError>{ formError }</FormError>
-              }
-              { formBusy &&
-                <Spinner/>
-              }
-              <Button onClick={deactivate} value="Cancel">Cancel</Button>
-              <Button type="submit" value="Save" disabled={formBusy}>Save</Button>
-            </Actions>
-          </Fragment>
-        }
-      </TaskForm>
     </Fragment>
   )
 };
