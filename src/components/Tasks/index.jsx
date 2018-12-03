@@ -3,6 +3,7 @@ import axios from 'axios';
 import posed, { PoseGroup } from 'react-pose';
 import styles from '../../styles';
 import styled from 'styled-components';
+import TaskListFormatter from '../../formatters/TaskListFormatter';
 
 // Components
 import Task from '../Task';
@@ -97,9 +98,10 @@ const Tasks = () => {
     setListBusy(true);
     axios.get('http://localhost:3001/api/v1/tasks')
     .then((res) => {
-      setTasks(res.data.data);
+      console.log( TaskListFormatter(res.data) );
+      setTasks(TaskListFormatter(res.data));
     })
-    .catch((error) => { setListError(`${error.message} 😧`) })
+    .catch((error) => { console.log(error);setListError(`${error.message} 😧`) })
     .finally(() => { setListBusy(false) });
   }, []);
 
@@ -108,7 +110,7 @@ const Tasks = () => {
     const payload = { data: {attributes: { title: title }}};
     axios.post('http://localhost:3001/api/v1/tasks', payload)
     .then((res) => {
-      setTasks( [...tasks, res.data.data] );
+      setTasks( [...tasks, {id: res.data.data.id, title: res.data.data.attributes.title}] );
       deactivate();
     })
     .catch((error) => { setFormError(`${error.message} 😧`) })
@@ -145,8 +147,8 @@ const Tasks = () => {
           <PoseGroup>
             {tasks.map((task, i) => (
               <Task
-                title={task.attributes.title}
-                tags={task.relationships.tags.data}
+                title={task.title}
+                tags={task.tags}
                 data-key={`task_${i}`}
                 key={`task_${i}`}
               />

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import posed from 'react-pose';
 import styles from '../../styles';
 
 //Components
@@ -32,7 +31,7 @@ const Task = ({ title, tags }) => (
     { tags && tags.length > 0 &&
       <TagList>
         { tags.map((tag, i) => (
-          <Tag title={title} key={`tag_${i}`} />
+          <Tag title={tag.title} key={`tag_${i}`} />
         )) }
       </TagList>
     }
