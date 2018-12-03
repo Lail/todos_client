@@ -4,7 +4,10 @@ import posed from 'react-pose';
 import styles from '../../styles';
 import styled from 'styled-components';
 import scrollIntoView from 'scroll-into-view';
+
+// Formatters
 import TaskListFormatter from '../../formatters/TaskListFormatter';
+import TaskFormatter from '../../formatters/TaskFormatter';
 
 // Components
 import Task from '../Task';
@@ -13,8 +16,8 @@ import Spinner from '../Spinner';
 import TagSelect from '../TagSelect';
 
 const PosedTaskList = posed.div({
-  large: { top: '4.5em', flip: true },
-  small: { top: '10em', flip: true },
+  large: { top: '5em', flip: true },
+  small: { top: '11em', flip: true },
 });
 const TaskList = styled(PosedTaskList)`
   position: absolute;
@@ -37,15 +40,15 @@ const PosedList = posed.div({
   exit: { opacity: 0.1 }
 });
 const PosedTaskForm = posed.form({
-  large: { height: '8em', flip: true },
-  small: { height: '2.5em', flip: true },
+  large: { height: '9em', flip: true },
+  small: { height: '3em', flip: true },
 });
 const TaskForm = styled(PosedTaskForm)`
   position: absolute;
   right: 0; top: 2em; left: 0;
   border-bottom: 1px solid ${styles.neutralMid};
   background-color: ${styles.neutralBright};
-  padding: 0.5em 1em 0.5em 1em;
+  padding: 0.75em 1em 0.75em 1em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -104,7 +107,6 @@ const Tasks = () => {
     setListBusy(true);
     axios.get('http://localhost:3001/api/v1/tasks')
     .then((res) => {
-      console.log( TaskListFormatter(res.data) );
       setTasks(TaskListFormatter(res.data));
     })
     .catch((error) => { console.log(error);setListError(`${error.message} 😧`) })
@@ -113,10 +115,10 @@ const Tasks = () => {
 
   const postNewTask = (title, tags=[]) => {
     setFormBusy(true);
-    const payload = { data: {attributes: { title: title }}};
+    const payload = { data: {attributes: { title: title, tags: tags }}};
     axios.post('http://localhost:3001/api/v1/tasks', payload)
     .then((res) => {
-      setTasks( [{id: res.data.data.id, title: res.data.data.attributes.title}, ...tasks] );
+      setTasks( [TaskFormatter(res.data), ...tasks] );
       deactivate();
       scrollIntoView(document.getElementById(`Task_${res.data.data.id}`));
     })
@@ -126,13 +128,11 @@ const Tasks = () => {
 
   const submitNewForm = (e) => {
     e.preventDefault()
-    debugger;
-    const title = e.target.title.value;
-    if(!title || title.length < 1){
+    if(!textValue || textValue.length < 1){
       return setFormError("Can't be blank");
     }
     setFormError(null);
-    postNewTask(title);
+    postNewTask(textValue, [selectValue]);
   }
 
   const activate = (e) => {
@@ -143,17 +143,12 @@ const Tasks = () => {
     e && e.preventDefault();
     setFormError(null);
     setFormOpen(false);
+    setTextValue(null);
+    setSelectValue(null)
   };
 
-  const handleTextChange = (e) => {
-    console.log(e.target.value);
-    setTextValue(e.target.value);
-  }
-  const handleSelectChange = (e) => {
-    console.log('FIRE!!!');
-    console.log(e.target.value);
-    setSelectValue(e.target.value);
-  }
+  const handleTextChange = (e) => { setTextValue(e.target.value); }
+  const handleSelectChange = (e) => { setSelectValue(e.value); }
 
   return (
     <Fragment>
@@ -172,7 +167,11 @@ const Tasks = () => {
         />
         { formOpen &&
           <Fragment>
-            <TagSelect name='tags' inputValue={""} handleSelectChange={handleSelectChange} />
+            <TagSelect
+              name='tags'
+              inputValue={""}
+              handleSelectChange={handleSelectChange}
+            />
             <Actions>
               { formError &&
                 <FormError>{ formError }</FormError>

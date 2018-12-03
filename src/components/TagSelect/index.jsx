@@ -35,34 +35,47 @@ const promiseOptions = inputValue =>
     .catch((error) => { console.log(error);})
   }, []);
 
-  // const handleInputChange = (newValue: string) => {
-  //   setCurrentValue( newValue.replace(/\W/g, '') );
-  //   return currentValue;
-  // };
+const customTheme = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      primary25: styles.highlight,
+      primary: styles.actionColor,
+    },
+    spacing: {
+      baseUnit: 2,
+    },
+  });
 
+const customStyles = ({
+    control: (selectStyles, { isFocused }) => ({
+      ...selectStyles,
+      background: "white",
+      width: "100% !important",
+      padding: "0.35em 0.35em",
+      fontSize: '70%',
+      borderColor: styles.neutralMid,
+      borderRadius: '3px',
+      ...selectStyles.control,
+    }),
+    option: (selectStyles) => ({
+      ...selectStyles,
+      fontSize: '70%',
+      color: styles.neutralDark,
+      padding: "0.35em 0.35em",
+      ...selectStyles.option,
+    })
+  });
 
   return (
     <AsyncSelect
       cacheOptions
       defaultOptions={defaultOptions}
       loadOptions={promiseOptions}
-      asyncOptions={handleSelectChange}
-      theme={(theme) => {
-          return (
-            {
-              ...theme,
-              borderRadius: '3px',
-              borderColor: styles.neutralMid,
-              fontSize: '70%',
-              colors: {
-                ...theme.colors,
-                primary25: styles.highlight,
-                primary: styles.actionColor,
-              }
-            }
-          );
-        }
-      }
+      onChange={handleSelectChange}
+      placeholder="Add Tags..."
+      styles={customStyles}
+      theme={customTheme}
     />
   );
 
