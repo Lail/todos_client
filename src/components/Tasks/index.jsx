@@ -91,7 +91,6 @@ const Tasks = () => {
   const [formBusy, setFormBusy] = useState(false);
   const [formError, setFormError] = useState(null);
   const [formOpen, setFormOpen] = useState(false);
-  const [formTitle, setFormTitle] = useState('');
 
   // load full list on mount
   useEffect(() => {
@@ -134,7 +133,6 @@ const Tasks = () => {
   const deactivate = (e) => {
     e && e.preventDefault();
     setFormError(null);
-    setFormTitle('');
     setFormOpen(false);
   };
 
@@ -168,9 +166,8 @@ const Tasks = () => {
       >
         <TitleText
           id='title'
-          value={ formTitle }
           onClick={ activate }
-          onChange={ (e) => { setFormTitle(e.target.value) } }
+          value={formOpen ?  null : ''}
           pose={ formOpen ? 'large' : 'small' }
           placeholder="Add a Todo..."
         />

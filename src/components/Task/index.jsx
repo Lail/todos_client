@@ -11,8 +11,8 @@ import Check from '../Check';
 
 const PosedWrapper = posed.div({
   here:  { opacity: 1 },
-  going: { opacity: 0.25, height: 'auto' },
-  gone:  { opacity: 0,    height: '0px', applyAtEnd: { display: 'none' } },
+  going: { opacity: 0.25 },
+  gone:  { opacity: 0, applyAtEnd: { display: 'none' } },
 });
 const Wrapper = styled(PosedWrapper)`
   position: relative;
