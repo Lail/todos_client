@@ -40,8 +40,8 @@ const PosedList = posed.div({
   exit: { opacity: 0.1 }
 });
 const PosedTaskForm = posed.form({
-  large: { height: '9em', flip: true },
-  small: { height: '3em', flip: true },
+  large: { minHeight: '9em', flip: true },
+  small: { minHeight: '3em', flip: true },
 });
 const TaskForm = styled(PosedTaskForm)`
   position: absolute;
@@ -53,6 +53,7 @@ const TaskForm = styled(PosedTaskForm)`
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
+  z-index: 1;
 `;
 const PosedTitleText = posed.textarea({
   large: { height: '4em', flip: true },

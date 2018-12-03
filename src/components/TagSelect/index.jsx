@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AsyncSelect from 'react-select/lib/Async';
+import AsyncCreatableSelect from 'react-select/lib/AsyncCreatable';
 import styles from '../../styles';
 import axios from 'axios';
 
@@ -56,6 +56,8 @@ const customStyles = ({
       fontSize: '70%',
       borderColor: styles.neutralMid,
       borderRadius: '3px',
+      margin: '1.0em 0',
+
       ...selectStyles.control,
     }),
     option: (selectStyles) => ({
@@ -68,7 +70,7 @@ const customStyles = ({
   });
 
   return (
-    <AsyncSelect
+    <AsyncCreatableSelect
       cacheOptions
       isClearable
       isMulti
