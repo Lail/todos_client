@@ -17,7 +17,7 @@ const Ground = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(16px + 1.0vmin);
   padding: 10px;
 `;
 const Card = styled.div`

@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
-import posed, { PoseGroup } from 'react-pose';
+import posed from 'react-pose';
 import styles from '../../styles';
 import styled from 'styled-components';
 import TaskListFormatter from '../../formatters/TaskListFormatter';
@@ -144,16 +144,15 @@ const Tasks = () => {
       <TaskList pose={ formOpen ? 'small' : 'large' }>
         { !listBusy && tasks &&
           <PosedList pose='enter' initialPose='exit' >
-          <PoseGroup>
             {tasks.map((task, i) => (
               <Task
                 title={task.title}
                 tags={task.tags}
+                id={task.id}
                 data-key={`task_${i}`}
                 key={`task_${i}`}
               />
             ))}
-            </PoseGroup>
           </PosedList>
         }
         { listBusy &&
