@@ -26,7 +26,7 @@ const Wrapper = styled(PosedWrapper)`
 const Clickable = styled.a`
   display: block;
   position: relative;
-  padding: 0.85em 1em 1em;
+  padding: 0.85em 1em 0.85em 1em;
   color: ${styles.neutralDark};
   text-decoration: none;
   &:hover {
@@ -76,7 +76,7 @@ const Task = ({ id, title, tags }) => {
   }
 
   return (
-    <Wrapper pose={getPose()}>
+    <Wrapper pose={getPose()} id={`Task_${id}`}>
       <Clickable href='#' onClick={checkTask} >
         <PositionedCheck checked={checked} />
         <Title checked={checked}>{ title }</Title>

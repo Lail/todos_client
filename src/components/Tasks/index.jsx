@@ -3,6 +3,7 @@ import axios from 'axios';
 import posed from 'react-pose';
 import styles from '../../styles';
 import styled from 'styled-components';
+import scrollIntoView from 'scroll-into-view';
 import TaskListFormatter from '../../formatters/TaskListFormatter';
 
 // Components
@@ -111,6 +112,7 @@ const Tasks = () => {
     .then((res) => {
       setTasks( [...tasks, {id: res.data.data.id, title: res.data.data.attributes.title}] );
       deactivate();
+      scrollIntoView(document.getElementById(`Task_${res.data.data.id}`));
     })
     .catch((error) => { setFormError(`${error.message} 😧`) })
     .finally(() => { setFormBusy(false) });
