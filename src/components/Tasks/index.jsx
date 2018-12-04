@@ -23,6 +23,7 @@ const TaskList = styled(PosedTaskList)`
   position: absolute;
   right: 0; bottom: 0; left: 0;
   overflow: auto;
+  border-top: 1px solid ${styles.neutralMid};
   &::-webkit-scrollbar {
     width: 10px;
     border-top: 1px solid ${styles.neutralMid};
@@ -35,7 +36,7 @@ const TaskList = styled(PosedTaskList)`
     border-right: 0;
   }
 `;
-const PosedList = posed.div({
+const FadeIn = posed.div({
   enter: { opacity: 1.0 },
   exit: { opacity: 0.1 }
 });
@@ -46,7 +47,6 @@ const PosedTaskForm = posed.form({
 const TaskForm = styled(PosedTaskForm)`
   position: absolute;
   right: 0; top: 2em; left: 0;
-  border-bottom: 1px solid ${styles.neutralMid};
   background-color: ${styles.neutralBright};
   padding: 0.75em 1em 0.75em 1em;
   display: flex;
@@ -91,6 +91,19 @@ const ListError = styled.div`
 const FormError = styled.div`
   color: ${styles.errorText};
   font-size: 60%;
+`;
+const CenterFloat = styled.div`
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const EmptyMessage = styled.div`
+  color: ${styles.neutralDark};
+  padding: 1em;
+  opacity: 0.5;
+  font-size: 85%;
 `;
 
 const Tasks = () => {
@@ -164,7 +177,7 @@ const Tasks = () => {
           value={ formOpen ?  undefined : '' }
           readOnly={ !formOpen }
           pose={ formOpen ? 'large' : 'small' }
-          placeholder="Add a Todo..."
+          placeholder="Add a task..."
           onChange={ handleTextChange }
         />
         { formOpen &&
@@ -189,7 +202,7 @@ const Tasks = () => {
       </TaskForm>
       <TaskList pose={ formOpen ? 'small' : 'large' }>
         { !listBusy && tasks &&
-          <PosedList pose='enter' initialPose='exit' >
+          <FadeIn pose='enter' initialPose='exit' >
             {tasks.map((task, i) => (
               <Task
                 title={task.title}
@@ -199,10 +212,15 @@ const Tasks = () => {
                 key={`task_${i}`}
               />
             ))}
-          </PosedList>
+          </FadeIn>
+        }
+        { !listBusy && !formOpen && tasks && tasks.length < 1 &&
+          <EmptyMessage>You haven't created any tasks yet. <br/> Click the field above the get started!</EmptyMessage>
         }
         { listBusy &&
-          <Spinner />
+          <CenterFloat>
+            <Spinner />
+          </CenterFloat>
         }
         { listError &&
           <ListError>{ listError }</ListError>

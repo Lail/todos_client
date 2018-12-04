@@ -6,10 +6,10 @@ import styles from '../../styles';
 const Wrapper = styled.span`
   display: inline-block;
   font-size: 55%;
+  max-width: 8em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow:ellipsis;
-  max-width: 8em;
   background-color: ${styles.neutralMid};
   background-color: ${({color}) => color.bg};
   color: ${({color}) => color.text};
@@ -17,10 +17,17 @@ const Wrapper = styled.span`
   margin-right: 0.3em;
   border-radius: 3px;
 `;
+const Title = styled.span`
+
+`;
 const Count = styled.span`
-  border-left: 1px olid ${({color}) => color.text};
-  margin-left: 0.5em;
-  padding-left: 0.5em;
+  display: inline-block;
+  border-right: 1px solid ${({color}) => color.text};
+  margin-right: 0.5em;
+  transform: translateY(-0.15em);
+  padding-right: 0.5em;
+  font-weight: 600;
+  font-size: 70%;
 `;
 
 const Tag = ({title, count}) => {
@@ -36,10 +43,11 @@ const Tag = ({title, count}) => {
 
   return (
     <Wrapper color={getColors(title)}>
-      {title}
-      { count &&
-        <Count>{count}</Count>
+      { count ?
+        <Count  color={getColors(title)}>{count}</Count>
+        : null
       }
+      <Title>{title}</Title>
     </Wrapper>
   );
 }

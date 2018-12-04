@@ -77,7 +77,7 @@ const customStyles = ({
       defaultOptions={defaultOptions}
       loadOptions={promiseOptions}
       onChange={handleSelectChange}
-      placeholder="Add Tags..."
+      placeholder="Add tags..."
       styles={customStyles}
       theme={customTheme}
     />
