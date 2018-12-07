@@ -9,6 +9,7 @@ const TaskListFormatter = (json) => {
     ary.reduce((memo, dta) => ([ ...memo, {
       id: dta.id,
       title: dta.attributes.title,
+      status: 'active',
       tags: dta.relationships.tags.data
         .reduce((memo2, rel) => ([...memo2, {id: rel.id, title: included[rel.id]}]), [])
     }]), [])

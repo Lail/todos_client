@@ -9,6 +9,7 @@ const TaskFormatter = (json) => {
     {
       id: data.id,
       title: data.attributes.title,
+      status: 'active',
       tags: data.relationships.tags.data
         .reduce((memo2, rel) => ([...memo2, {id: rel.id, title: included[rel.id]}]), [])
     }

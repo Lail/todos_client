@@ -133,12 +133,30 @@ const Tasks = () => {
     const payload = { data: {attributes: { title: title, ...tagValues }}};
     axios.post('http://localhost:3001/api/v1/tasks', payload)
     .then((res) => {
-      setTasks( [TaskFormatter(res.data), ...tasks] );
+      setTasks( prevTasks => [TaskFormatter(res.data), ...prevTasks] );
       deactivate();
       scrollIntoView(document.getElementById(`Task_${res.data.data.id}`));
     })
     .catch((error) => { setFormError(`${error.message} 😧`) })
-    .finally(() => { setFormBusy(false) });
+    .finally(() => {setFormBusy(false)});
+  }
+
+  const deleteTask = (id) => {
+    setStatus(id, 'going');
+    axios.delete(`http://localhost:3001/api/v1/tasks/${id}`)
+    .then((res) => {
+      setStatus(id, 'gone');
+    })
+    .catch((error) => { setStatus(id, 'active'); })
+  }
+
+  const setStatus = (id, status) => {
+    const tasks_idx = tasks.findIndex((task) => task.id === id);
+    if (tasks_idx === -1) { return }
+    // clone the tasks array in state, change the status at tasks_idx, and setTasks
+    const clone = [...tasks];
+    clone[tasks_idx].status = status;
+    setTasks(clone);
   }
 
   const submitNewForm = (e) => {
@@ -207,6 +225,8 @@ const Tasks = () => {
               <Task
                 title={task.title}
                 tags={task.tags}
+                status={task.status}
+                deleteTask={deleteTask}
                 id={task.id}
                 data-key={`task_${i}`}
                 key={`task_${i}`}

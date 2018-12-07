@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import Checked from '../../Checked.svg';
 import Unchecked from '../../Unchecked.svg';
 
-const Check = ({checked, className})  => (
+const Check = ({status, className})  => (
   <Fragment>
-    { checked &&
+    { status !== 'active' &&
       <img src={Checked} className={className} alt="Checked" />
     }
-    { !checked &&
+    { status === 'active' &&
       <img src={Unchecked}  className={className}  alt="Unchecked" />
     }
   </Fragment>
@@ -21,7 +21,7 @@ Check.defaultProps = {
 };
 
 Check.propTypes = {
-  checked: PropTypes.bool.isRequired,
+  status: PropTypes.string.isRequired,
   className: PropTypes.string,
 };
 

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import posed from 'react-pose';
 import styled from 'styled-components';
 import styles from '../../styles';
 
@@ -9,16 +7,13 @@ import styles from '../../styles';
 import Tag from '../Tag';
 import Check from '../Check';
 
-const PosedWrapper = posed.div({
-  here:  { opacity: 1 },
-  going: { opacity: 0.25 },
-  gone:  { opacity: 0, applyAtEnd: { display: 'none' } },
-});
-const Wrapper = styled(PosedWrapper)`
+const Wrapper = styled.div`
   position: relative;
   padding: 0;
   box-shadow: inset 0 -1px 0 0 ${styles.neutralMid};
   overflow: hidden;
+  opacity: ${({ status }) => status === 'active' ? 1 : 0.25};
+  display: ${({ status }) => status === 'gone' ? 'none' : 'block'};
   &:last-child {
     box-shadow: none;
   }
@@ -39,7 +34,7 @@ const Title = styled.h2`
   line-height: 1.0;
   padding: 0;
   margin: 0 0 0 1.25em;
-  text-decoration: ${({checked}) => checked ? 'line-through' : 'none'};
+  text-decoration: ${({status}) => status === 'active' ? 'none' : 'line-through' };
 `;
 const TagList = styled.div`
   margin: 0.25em 0 0 1.5em;
@@ -52,34 +47,18 @@ const PositionedCheck = styled(Check)`
   width: 0.9em;
 `;
 
-const Task = ({ id, title, tags }) => {
-  const [checked, setChecked] = useState(false);
-  const [removed, setRemoved] = useState(false);
+const Task = ({ id, title, status, tags, deleteTask }) => {
 
-  const deleteTask = (id) => {
-    setChecked(true);
-    axios.delete(`http://localhost:3001/api/v1/tasks/${id}`)
-    .then((res) => {
-      setRemoved(true);
-    })
-    .catch((error) => { setChecked(false); })
-  }
-
-  const checkTask = (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
     deleteTask(id);
   }
 
-  const getPose = () => {
-    if(removed) { return 'gone' };
-    return checked ? 'going' : 'here';
-  }
-
   return (
-    <Wrapper pose={getPose()} id={`Task_${id}`}>
-      <Clickable href='#' onClick={checkTask} >
-        <PositionedCheck checked={checked} />
-        <Title checked={checked}>{ title }</Title>
+    <Wrapper status={status} id={`Task_${id}`}>
+      <Clickable href='#' onClick={handleClick} >
+        <PositionedCheck status={status} />
+        <Title status={status}>{ title }</Title>
         { tags && tags.length > 0 &&
           <TagList>
             { tags.map((tag, i) => (
@@ -101,6 +80,8 @@ Task.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   tags: PropTypes.array.isRequired,
+  status: PropTypes.string.isRequired,
+  deleteTask: PropTypes.func.isRequired,
 }
 
 export default Task;
